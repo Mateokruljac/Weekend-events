@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <center><h1>Register</h1>
+   <br><br>
+   
+   <form action = "user-register" method = "POST">
+           {% csrf_token %}   
+           <!-- First name -->
+           <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example1">First name</label>
+             <input type="text"  required="True" placeholder = "First name" name = "first_name"  class="form-control" />
+           </div>
+           
+           <!-- Last name -->
+           <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example1">Last name</label>
+             <input type="text"  required="True" placeholder = "Last name" name = "last_name"  class="form-control" />
+           </div>
+           
+           
+           <!-- Email input -->
+           <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example1">Email</label>
+             <input type="email"  required="True" placeholder = "email" name = "email" class="form-control" />
+           </div>
+         
+         <!-- Username input -->
+           <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example1">Username</label>
+             <input type="text"  required="True" placeholder = "username" name = "username"  class="form-control" />
+           </div>
+         
+           <!-- Password input -->
+           <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example2">Password</label>
+             <input type="password"  name = "password"  required="True" placeholder = "password" id="form2Example2" class="form-control" />
+           </div>
+        
+           <!-- Confirm password input -->
+           <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example2">Confirm password</label>
+             <input type="password"  name = "confirm_password"  required="True" placeholder = "Confirm password" id="form2Example2" class="form-control" />
+           </div>
+
+           <!-- Submit button -->
+           <input value = "Submit" type="submit" class="btn btn-secondary btn-block mb-4">
+        
+   </form>
+    {% for message in messages %}
+            {{message}}
+    {% endfor %}
+  
+   </center>
+ 
+{% endblock %}

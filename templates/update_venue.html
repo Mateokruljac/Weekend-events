@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>  UPDATE </h2>
+    {% if updated %}
+    Venue {{venue.name}} is successfully updated! <a href = {% url 'all_venues' %}>Click here</a> to going to all venues page. 
+    {% else %}
+        <form action ="" method = "POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <input type = "submit" class = "btn btn-secondary" value = "Save">
+
+        </form>
+    {% endif %}    
+
+        
+{% endblock %}

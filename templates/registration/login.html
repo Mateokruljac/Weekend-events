@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <center><h1>Login</h1>
+   <br><br>
+   
+   <form action = "" method = "POST">
+           {% csrf_token %}   
+           <!-- Email input -->
+           <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example1">Username</label>
+             <input type="text" placeholder = "username" name = "username" id="form2Example1" class="form-control" />
+           </div>
+         
+           <!-- Password input -->
+           <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example2">Password</label>
+             <input type="password"  name = "password" placeholder = "password" id="form2Example2" class="form-control" />
+           </div>
+
+           <!-- Submit button -->
+           <input value = "Submit" type="submit" class="btn btn-secondary btn-block mb-4">
+         
+           <!-- Register buttons -->
+           <div class="text-center">
+             <p>Not a member? <a href="{% url 'registration' %}">Register</a></p>
+           </div>
+   </form>
+    {% for message in messages %}
+            {{message}}
+    {% endfor %}
+  
+   </center>
+ 
+{% endblock %}

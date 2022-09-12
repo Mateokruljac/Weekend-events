@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+   <center><h1>Add venue</h1> {{user.id}}
+   <br><br>
+   {% if submitted %}
+      Your Venue Was Submitted Successfully!!!
+   {% else %}
+   <form action = "" method = "POST">
+           {% csrf_token %}   
+             {{form.as_p}} 
+  <input type = "submit" value = "Submit" class = "btn btn-secondary">           
+   
+   </form>
+   {% endif %}
+   </center>
+{% else %}
+<h2>Sorry! You must be logged in to view this page!</h2>
+<a href = "{% url 'login_user' %}">Login here</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<div>
+<button class = "btn btn-outline-secondary">
+  <a href = "{% url 'add_event' %}" style = "color:black">+ Add event</a></button>
+  </div>
+{% for event in events %}
+<div class = "card">
+<div class="card-header bg-secondary">
+      {{ event.name }}                         
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Venue: {{event.venue.name}}</h5>
+      <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
+      <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+      <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
+      <p class="card-text"><b>Description:</b> {{event.description|safe|slice:":150"}}...<br><a href ="{% url 'event_detail' event.id %}">click for more</a></p>
+      <p class="card-text"><a href = "{% url 'event_pdf' event.id %}" style = "color:black">Download content</a></p>
+               {% if user == event.manager%}
+                <div class = "card-footer text-muted">
+                 <a href = "{% url 'update_event' event.id %}" style = "color:black">
+                   <button class = "btn btn-outline-secondary" type = "submit" style = "color:black">Update {{event.name}}</button></a>
+                 <a href = "{% url 'delete_event' event.id %}" style = "color:black">
+                   <button class = "btn btn-outline-danger" type = "submit" style = "color:red">Delete {{event.name}}</button></a>
+               </div>
+               {% endif %}
+</div>
+{% endfor %}
+</div>
+<center>
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+   {% if events.has_previous %} 
+    <li class="page-item">
+      <a class="page-link" href="?page=1" tabindex="-1" style="color:black">First page</a>
+    </li>
+    <li class="page-item dark">
+      <a class="page-link" href="?page={{events.previous_page_number}}" tabindex="-1" style="color:black">Previous</a>
+    </li>
+   {% else %} 
+    <li class="page-item">
+      <a class="page-link"  tabindex="-1" style="color:black">First page</a>
+    </li>
+    <li class="page-item ">
+      <a class="page-link"tabindex="-1" style="color:black">Previous</a>
+    </li>
+    {% endif %}
+    <li class="page-item active ">
+      <a class="page-link bg-dark" href="#">{{ events.number}} of {{events.paginator.num_pages}}</a>
+    </li>
+    {% if events.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{events.next_page_number}}"style="color:black">Next</a></li>
+    <li class="page-item">
+      <a class="page-link" href="page = {{events.paginator.num_pages}}" style="color:black">End</a>
+    </li>
+    
+    {% else %}
+    <li class="page-item"><a class="page-link"style="color:black" >Next</a></li>
+    <li class="page-item">
+      <a class="page-link"style="color:black" >End</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+</center>
+{% else %}
+{% for event in events %}
+<div class = "card">
+<div class="card-header bg-secondary">
+      {{ event.name }}                         
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Venue: {{event.venue.name}}</h5>
+      <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
+      <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+      <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
+      <p class="card-text"><b>Description:</b> {{event.description|safe|slice:":150"}}...<br><a href ="{% url 'event_detail' event.id %}">click for more</a></p>
+      <p class="card-text"><a href = "{% url 'event_pdf' event.id %}" style = "color:black">Download content</a></p>
+
+{% endfor %}
+</div>
+<center>
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+   {% if events.has_previous %} 
+    <li class="page-item">
+      <a class="page-link" href="?page=1" tabindex="-1" style="color:black">First page</a>
+    </li>
+    <li class="page-item dark">
+      <a class="page-link" href="?page={{events.previous_page_number}}" tabindex="-1" style="color:black">Previous</a>
+    </li>
+   {% else %} 
+    <li class="page-item">
+      <a class="page-link"  tabindex="-1" style="color:black">First page</a>
+    </li>
+    <li class="page-item ">
+      <a class="page-link"tabindex="-1" style="color:black">Previous</a>
+    </li>
+    {% endif %}
+    <li class="page-item active ">
+      <a class="page-link bg-dark" href="#">{{ events.number}} of {{events.paginator.num_pages}}</a>
+    </li>
+    {% if events.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{events.next_page_number}}"style="color:black">Next</a></li>
+    <li class="page-item">
+      <a class="page-link" href="page = {{events.paginator.num_pages}}" style="color:black">End</a>
+    </li>
+    
+    {% else %}
+    <li class="page-item"><a class="page-link"style="color:black" >Next</a></li>
+    <li class="page-item">
+      <a class="page-link"style="color:black" >End</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+</center>
+{% endif %}
+{% comment %} 
+Previous: {{events.has_previous}}<br>
+Next: {{events.has_next}}<br>
+Current: {{events.number}}<br>
+Total pages: {{events.paginator.num_pages}} {% endcomment %}
+{% endblock %}

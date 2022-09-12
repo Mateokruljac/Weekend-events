@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for venue in venues %}
+<center>
+   <h1>{{venue.name}}</h1>
+</center>
+<div class = "card">
+<div class="card-header bg-secondary">
+    <center style = "color:white">  {{ venue.name }}  <center> 
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Address:{{venue.address}}</h5>
+      <p class="card-text"><b>Zip code:</b> {{venue.zip_code}}</p>
+      {% if venue.web %}
+      <p class = "card-text"><b>Venue Website:</b> <small>{{venue.web}}</small></p>
+      {% endif %}
+      {% if venue.phone %}
+      <p class="card-text"><b>Phone:</b> {{venue.phone}}</p>
+      {% endif %}
+      {% if venue.email_address %}
+      <p class="card-text"><b>Email Address:</b> {{venue.email_address}}</p>
+      {% endif %}  
+</div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+

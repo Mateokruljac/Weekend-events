@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if searched %}
+    {% if venues %}
+      You were looking for:  <strong>{{searched}}</strong><br><br>
+      <table class="table table-hover table-light">
+        <thead>
+          <tr>
+            <th scope="col">Venue</th>
+            <th scope="col">Address</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for venue in venues %}
+            <tr>
+              <td><a href = "{% url 'show_venue' venue.id %}" style = "color:black">{{venue.name}}</a></td>
+              <td>{{venue.address}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    {% else %}
+    You were looking for something that is not  venue!     
+    {% endif %}          
+{% else %}
+You were looking for something that doesn't exist
+{% endif %}
+{% endblock %}
