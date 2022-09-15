@@ -13,7 +13,7 @@ def user_login(request):
         user    = authenticate(request,username = username,password = password)
         if user is not None:
             login(request,user)
-            return render(request,"home.html")
+            return redirect("home")
         else:
             messages.info(request,"Invalid username or password! Please, try again or create new profile!")
             return render (request,"registration/login.html")

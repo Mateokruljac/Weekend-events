@@ -1,22 +1,28 @@
 {% extends 'base.html' %}
-
+<head>
+<title>Create event</title>
+</head>
 {% block content %}
 {% if user.is_authenticated %}
-   <center><h1>Add venue</h1> {{user.id}}
+   <center><h1>add event</h1>
    <br><br>
    {% if submitted %}
-      Your Venue Was Submitted Successfully!!!
+      Your Event Was Submitted Successfully!!!
    {% else %}
    <form action = "" method = "POST">
            {% csrf_token %}   
              {{form.as_p}} 
+                          
   <input type = "submit" value = "Submit" class = "btn btn-secondary">           
    
    </form>
    {% endif %}
+    {% for message in messages %}
+          {{message}}
+          {% endfor %}
    </center>
 {% else %}
-<h2>Sorry! You must be logged in to view this page!</h2>
-<a href = "{% url 'login_user' %}">Login here</a>
+<h2> Sorry! You must be logged in to view this page...</h2>
+<a href = "{% url 'login_user' %}">Login here</a>  
 {% endif %}
 {% endblock %}

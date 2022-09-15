@@ -25,8 +25,8 @@ class VenueForm(forms.ModelForm):
         }
 class MyClubUsersForms:pass
 
-
-class EventForms(forms.ModelForm):
+#Admin superuser form event 
+class EventFormAdmin(forms.ModelForm):
     class Meta:
         model = Event
         fields = ["name","event_date","venue","manager","description","attendees"]
@@ -40,9 +40,30 @@ class EventForms(forms.ModelForm):
         }
         labels = {
             "name":"",
-            "event_date":"",
+            "event_date":"YYYY-MM-DD HH:MM:SS",
             "venue":"",
             "manager":"",
+            "description":"",
+            "attendees":"",
+            
+        }
+    
+#Regular user event forms
+class EventFormUser(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ["name","event_date","venue","description","attendees"]
+        widgets = {
+            "name":forms.TextInput(attrs = {"class":"form-control","placeholder":"Event name"}),
+            "event_date":forms.TextInput(attrs = {"class":"form-control","placeholder":"YYYY-MM-DD HH-MM-SS"}),
+            "venue":forms.Select(attrs = {"class":"form-control","placeholder":"Venues"}),
+            "description":forms.Textarea(attrs = {"class":"form-control","placeholder":"Write..."}),
+            "attendees":forms.SelectMultiple(attrs = {"class":"form-control","placeholder":"Attendees"}),
+        }
+        labels = {
+            "name":"",
+            "event_date":"YYYY-MM-DD HH:MM:SS",
+            "venue":"",
             "description":"",
             "attendees":"",
             

@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import delete_event, home,add_event, all_events,add_venue,all_venues
-from .views import show_venue,search_venues,update_venue, update_event
+from .views import delete_event, home,add_event, all_events,add_venue,all_venues, my_events
+from .views import show_venue,search_venues,update_venue, update_event, search_events
 from .views import delete_event,delete_venue, venue_text,venue_pdf,event_detail,event_pdf
 urlpatterns = [
     #int: numbers
@@ -23,5 +23,7 @@ urlpatterns = [
     path("venue-text",venue_text,name = "venue_text"),
     path("venue-pdf",venue_pdf,name = "venue_pdf"),
     path("event-pdf/<id>",event_pdf,name = "event_pdf"),
+    path("my-events/<str:manager>",my_events,name = "my_events"),
+    path("search-event",search_events,name  = "search_events")
     
 ]
