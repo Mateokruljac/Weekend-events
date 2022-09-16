@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block content %}
 
@@ -23,6 +23,9 @@
       {% endif %}  
       {% if venue_owner %}
       <p class="card-text"><b>Owner:</b> {{venue_owner.first_name}}   {{venue_owner.last_name}}</p>
+      {% endif %} 
+      {% if venue.image %}
+      <img src = "{{ venue.image.url }}" width ="700px" height = "500px"> 
       {% endif %} 
       
 </div>

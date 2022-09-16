@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block content %}
 
@@ -9,10 +9,10 @@
        <tr>
          <th scope="col">Venue</th>
          <th scope="col">Address</th>
-         {% if user.is_authenticated%}
+
          <th scope="col">Update Venue</th>
          <th scope="col">Delete Venue</th>
-         {% endif %}
+         
         </tr>
   </thead>
   <tbody>
@@ -20,7 +20,7 @@
       <tr>
         <td><a href = "{% url 'show_venue' venue.id %}" style = "color:black">{{venue.name}}</a></td>
         <td>{{venue.address}}</td>
-        {% if user.is_authenticated%}
+        {% if user.is_authenticated and user.id == venue.owner %}
         <td><a href = "{% url 'update_venue' venue.id %}" style = "color:black"><button class ="btn btn-outline-secondary" >Click here</a></button></td>
         <td><a href = "{% url 'delete_venue' venue.id %}" style = "color:black"><button class ="btn btn-outline-danger" >Click here</a></button></td>
         {% endif %}

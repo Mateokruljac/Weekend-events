@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
@@ -8,6 +9,7 @@ class Venue(models.Model):
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     zip_code = models.CharField(max_length=10)
+    image  = models.ImageField(blank = True,null = True,upload_to ="images/")
     owner  = models.IntegerField(blank = False,default = 1)
     phone = models.CharField("Contact",max_length = 20,blank = True)
     web = models.URLField(blank = True)
@@ -36,7 +38,25 @@ class Event(models.Model):
     manager = models.ForeignKey(User,on_delete = models.SET_NULL,blank = True,null = True)
     description = RichTextField(blank = True)
     attendees = models.ManyToManyField(MyClubUsers,blank = True)
-    
+    # admin should approve, if he wants! 
+    approved =  models.BooleanField(default=False) # if approved return TRUE, else FALSE 
     def __str__(self):
        return  f"{self.name} {self.event_date}"
     
+    
+    @property
+    def days_till(self):
+        today = datetime.date.today()
+        #event_date return date and time, but we want only date
+        days_till = self.event_date.date() - today
+        return days_till.days
+    
+    @property
+    def is_past_or_future(self):
+        today = datetime.date.today()
+        if self.event_date.date() < today:
+             time = "Past"
+        else:
+            time = "Future"
+            
+        return time

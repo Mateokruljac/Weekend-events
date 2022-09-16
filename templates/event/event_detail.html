@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block content %}
 {%if user.is_authenticated %}
@@ -10,6 +10,7 @@
       <h5 class="card-title">Venue: {{event.venue.name}}</h5>
       <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
       <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+      <p class="card-text"><b>Days till event:</b> {{event.days_till}} day(s)</p>
       <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
       <p class="card-text"><b>Description:</b> {{event.description|safe}}</p>
       <p class="card-text"><b>Attendees:</b>
@@ -37,6 +38,7 @@
         <h5 class="card-title">Venue: {{event.venue.name}}</h5>
         <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
         <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+        <p class="card-text"><b>Days till event:</b> {{event.days_till}} day(s)</p>
         <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
         <p class="card-text"><b>Description:</b> {{event.description|safe}}</p>
         <p class="card-text"><b>Attendees:</b>

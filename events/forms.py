@@ -6,7 +6,7 @@ from .models import MyClubUsers,Venue,Event
 class VenueForm(forms.ModelForm):
     class Meta:
         model = Venue
-        fields = ["name","address","zip_code","phone","web","email_address"]
+        fields = ["name","address","zip_code","phone","web","email_address","image"]
         widgets = {
             "name":forms.TextInput(attrs={"class":"form-control","placeholder":"Name"}),
             "address":forms.TextInput(attrs={"class":"form-control","placeholder":"Address"}),
@@ -14,6 +14,7 @@ class VenueForm(forms.ModelForm):
             "phone":forms.TextInput(attrs={"class":"form-control","placeholder":"Phone"}),
             "web":forms.TextInput(attrs={"class":"form-control","placeholder":"Web"}),
             "email_address":forms.EmailInput(attrs={"class":"form-control","placeholder":"Email address"}),
+            
             }
         labels = {
             "name":"",
@@ -22,6 +23,7 @@ class VenueForm(forms.ModelForm):
             "phone":"",
             "web":"",
             "email_address":"",
+            "image":""
         }
 class MyClubUsersForms:pass
 

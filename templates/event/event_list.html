@@ -1,24 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block content %}
 
 
 {% if user.is_authenticated %}
+
 <div>
 <button class = "btn btn-outline-secondary">
   <a href = "{% url 'add_event' %}" style = "color:black">+ Add event</a></button>
   </div>
 {% for event in events %}
+{% if event.approved %}
 <div class = "card">
 <div class="card-header bg-secondary">
-      {{ event.name }}                         
+      <strong>{{ event.name }}</strong>      <p class="card-text"> Days till event: {{event.days_till}} day(s)</p>                        
     </div>
     <div class="card-body">
-      <h5 class="card-title">Venue: {{event.venue.name}}</h5>
+      <h5 class="card-title">Venue: {{event.venue.name}} </h5>
       <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
       <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+      <p class="card-text"><b>Occured:</b> {{event.is_past_or_future}}</p>
       <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
       <p class="card-text"><b>Description:</b> {{event.description|safe|slice:":150"}}...<br><a href ="{% url 'event_detail' event.id %}">click for more</a></p>
+      <p class="card-text"><b>Approved:</b> {{event.approved}}</p>
       <p class="card-text"><a href = "{% url 'event_pdf' event.id %}" style = "color:black">Download content</a></p>
                {% if user == event.manager%}
                 <div class = "card-footer text-muted">
@@ -28,20 +32,26 @@
                    <button class = "btn btn-outline-danger" type = "submit" style = "color:red">Delete {{event.name}}</button></a>
                </div>
                {% endif %}
+
+    {%else%}
+    <div align = "center">
+     <b> Other events have not been approved yet!</b> 
+    </div><br>
+    {% endif %}
 </div>
 {% endfor %}
 </div>
 <center>
-<nav aria-label="...">
+  <nav aria-label="...">
   <ul class="pagination justify-content-center">
-   {% if events.has_previous %} 
+    {% if events.has_previous %} 
     <li class="page-item">
       <a class="page-link" href="?page=1" tabindex="-1" style="color:black">First page</a>
     </li>
     <li class="page-item dark">
       <a class="page-link" href="?page={{events.previous_page_number}}" tabindex="-1" style="color:black">Previous</a>
     </li>
-   {% else %} 
+    {% else %} 
     <li class="page-item">
       <a class="page-link"  tabindex="-1" style="color:black">First page</a>
     </li>
@@ -67,35 +77,41 @@
   </ul>
 </nav>
 </center>
+
+
+
+
 {% else %}
 {% for event in events %}
+{% if event.approved %}
 <div class = "card">
-<div class="card-header bg-secondary">
-      {{ event.name }}                         
+  <div class="card-header bg-secondary">
+    {{ event.name }}                         
     </div>
     <div class="card-body">
       <h5 class="card-title">Venue: {{event.venue.name}}</h5>
       <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
       <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+      <p class="card-text"><b>Occured:</b> {{event.is_past_or_future}}</p>
       <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
       <p class="card-text"><b>Description:</b> {{event.description|safe|slice:":150"}}...<br><a href ="{% url 'event_detail' event.id %}">click for more</a></p>
       <p class="card-text"><a href = "{% url 'event_pdf' event.id %}" style = "color:black">Download content</a></p>
-
-{% endfor %}
-</div>
-<center>
-<nav aria-label="...">
-  <ul class="pagination justify-content-center">
-   {% if events.has_previous %} 
-    <li class="page-item">
-      <a class="page-link" href="?page=1" tabindex="-1" style="color:black">First page</a>
-    </li>
-    <li class="page-item dark">
-      <a class="page-link" href="?page={{events.previous_page_number}}" tabindex="-1" style="color:black">Previous</a>
-    </li>
-   {% else %} 
-    <li class="page-item">
-      <a class="page-link"  tabindex="-1" style="color:black">First page</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <center>
+      <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+          {% if events.has_previous %} 
+          <li class="page-item">
+            <a class="page-link" href="?page=1" tabindex="-1" style="color:black">First page</a>
+          </li>
+          <li class="page-item dark">
+            <a class="page-link" href="?page={{events.previous_page_number}}" tabindex="-1" style="color:black">Previous</a>
+          </li>
+          {% else %} 
+          <li class="page-item">
+            <a class="page-link"  tabindex="-1" style="color:black">First page</a>
     </li>
     <li class="page-item ">
       <a class="page-link"tabindex="-1" style="color:black">Previous</a>
@@ -119,10 +135,10 @@
   </ul>
 </nav>
 </center>
-{% endif %}
 {% comment %} 
 Previous: {{events.has_previous}}<br>
 Next: {{events.has_next}}<br>
 Current: {{events.number}}<br>
 Total pages: {{events.paginator.num_pages}} {% endcomment %}
+{% endif %}
 {% endblock %}

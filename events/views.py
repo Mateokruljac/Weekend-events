@@ -52,7 +52,7 @@ def home(request,year = datetime.now().year,month = datetime.now().strftime("%B"
     
     # get current time 
     time = now.strftime('%I:%M:%S  %p')     
-    return render(request,"home.html",{#"year" :year,
+    return render(request,"core/home.html",{#"year" :year,
                                        #"month":month,
                                     #    "month_number":month_number,
                                        "cal":cal,
@@ -81,7 +81,7 @@ def event_detail(request,id):
 def add_venue(request):
     submitted = False
     if request.method == "POST":  # if clicked to post
-       form = VenueForm(request.POST) #whatever they posted and passed into venue form  
+       form = VenueForm(request.POST,request.FILES) #whatever they posted and passed into venue form  
        if form.is_valid():
            # we are going to save venue, but not yet...why?
            #we have to parse correct user to owner field
@@ -138,7 +138,7 @@ def update_venue (request,id):
     updated = False 
     if request.method == "POST":
         venue = Venue.objects.get(pk = id)
-        venue_form = VenueForm(request.POST or None, instance = venue)
+        venue_form = VenueForm(request.POST or None,request.FILES, instance = venue)
         if venue_form.is_valid():
             venue_form.save()
             return HttpResponseRedirect(f"/update-venue/{id}?updated=True")
@@ -329,6 +329,10 @@ def my_events(request,manager):
           return render(request,"event/my_events.html",{"my_event":my_event}) 
     else:
         logout(request)
-        messages.info(request,"Please log in to see page!")
+        messages.info(request,"Please log in to see this page!")
         return render(request,"event/my_events.html")
+
+#create admin event approval page     
+def admin_approval(request):
     
+    return render (request,"event/admin_approval.html",{})
