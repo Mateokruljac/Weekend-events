@@ -64,7 +64,7 @@ def all_events(request):
     events_list = Event.objects.all().order_by("event_date","venue")
     
     #set up Pagination
-    paginator = Paginator(Event.objects.all().order_by("event_date"),1)
+    paginator = Paginator(Event.objects.filter(approved = True).order_by("event_date"),1)
     page = request.GET.get("page")
     events = paginator.get_page(page) 
     
@@ -334,5 +334,23 @@ def my_events(request,manager):
 
 #create admin event approval page     
 def admin_approval(request):
-    
-    return render (request,"event/admin_approval.html",{})
+    event_list = Event.objects.all().order_by("event_date")
+    if request.user.is_superuser:
+        if request.method == "POST":
+           id_list = request.POST.getlist("boxes")
+           
+           #uncheck all events and then check you want
+           event_list.update(approved = False)
+           
+           #update in database 
+           #for each id in box 
+           for x in id_list:
+               Event.objects.filter(pk = int(x)).update(approved = True)
+           
+           messages.success(request,"Event list approval has been updated successfully!")
+           return render(request,"event/admin_approval.html",{"event_list":event_list})
+        else:    
+           return render(request,"event/admin_approval.html",{"event_list":event_list})
+    else:
+        messages.info(request,"Sorry! You are not allowed to see this page!")
+        return render (request,"event/admin_approval.html")

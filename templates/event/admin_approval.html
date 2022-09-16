@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+   <center><h1>Admin Event Panel </h1>
+   <br><br>
+<form action = "" method = "POST">   
+    {% csrf_token %}
+   <table class="table table-hover  table-striped table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Event</th>
+                    <th scope="col">Venue</th>
+                    <th scope="col">Approved</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in event_list %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{event.venue}}</td>
+                    <td>
+                        {% if event.approved %}
+                        <div class ="form-check">
+                            <input name = "boxes" class ="form-check-input"value = {{event.id}} type ="checkbox" checked = "checked">
+                        </div>
+                        {% else %}
+                        <div class ="form-check">
+                            <input name ="boxes" class ="form-check-input" value={{event.id}} type ="checkbox" >
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+<br>
+<input type ="submit" class ="btn btn-dark btn-hover" value = "Update Approval" >        
+</form>
+{% for message in messages %}
+            {{message}}
+            {% endfor %}  
+{% else %}
+    {% for message in messages %}
+            {{message}}
+            {% endfor %}        
+{% endif %}   
+{% endblock %}
