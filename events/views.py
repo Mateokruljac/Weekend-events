@@ -43,8 +43,8 @@ def home(request,year = datetime.now().year,month = datetime.now().strftime("%B"
     #Query the Event model for date
     # double-underscore
     #in field event_date we are looking for year 
-    event_list = Event.objects.filter(event_date__year = 2023,
-                                      event_date__month = 12)
+    event_list = Event.objects.filter(event_date__year = year,
+                                      event_date__month = month_number)
     
     paginator = Paginator(event_list,2)
     page = request.GET.get("page")
@@ -76,7 +76,7 @@ def all_events(request):
 def event_detail(request,id):
     if request.method == "GET":
         event = Event.objects.get(pk = id)
-        return render (request,"events/event_detail.html",{"event":event})
+        return render (request,"event/event_detail.html",{"event":event})
     
 def add_venue(request):
     submitted = False

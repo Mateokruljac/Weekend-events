@@ -94,8 +94,20 @@
                </div><div  class ="col-sm-4">{{cal|safe}}</div></div>
       {% endif %}      
 {% else %}
-Sorry, there is not event for this month!
+<br><br>
+<div class ="row">
+  <div class = "col-sm-4">
+     Sorry, there is not event for this month!<br>
+     You want to add one? Click on the button below!<br>
+     <button class ="btn btn-outline-secondary" type = "button" aria-label = "button"><a href = "{% url 'add_event' %}" style = "color:black">+Add Event</a></button>
+  </div>
+  <div class ="col-sm-4">
+  </div>
+  <div class = "col-sm-4">
+    {{cal|safe}}
+  </div>
 {% endif %}
+</div>
 </div> 
 
 
