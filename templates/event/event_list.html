@@ -53,9 +53,9 @@
       <a class="page-link bg-dark" href="#">{{ events.number}} of {{events.paginator.num_pages}}</a>
     </li>
     {% if events.has_next %}
-    <li class="page-item"><a class="page-link" href="?page={{events.next_page_number}}"style="color:black">Next</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{events.next_page_number}}" style="color:black">Next</a></li>
     <li class="page-item">
-      <a class="page-link" href="page = {{events.paginator.num_pages}}" style="color:black">End</a>
+      <a class="page-link" href="?page={{events.paginator.num_pages}}" style="color:black">End</a>
     </li>
     
     {% else %}
@@ -107,7 +107,7 @@
     {% if events.has_next %}
     <li class="page-item"><a class="page-link" href="?page={{events.next_page_number}}"style="color:black">Next</a></li>
     <li class="page-item">
-      <a class="page-link" href="page = {{events.paginator.num_pages}}" style="color:black">End</a>
+      <a class="page-link" href="?page={{events.paginator.num_pages}}" style="color:black">End</a>
     </li>
     
     {% else %}

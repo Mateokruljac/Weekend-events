@@ -40,14 +40,25 @@ def home(request,year = datetime.now().year,month = datetime.now().strftime("%B"
     now = datetime.now()
     current_year = now.year
     
+    #Query the Event model for date
+    # double-underscore
+    #in field event_date we are looking for year 
+    event_list = Event.objects.filter(event_date__year = 2023,
+                                      event_date__month = 12)
+    
+    paginator = Paginator(event_list,2)
+    page = request.GET.get("page")
+    event_list = paginator.get_page(page)
+    
     # get current time 
     time = now.strftime('%I:%M:%S  %p')     
-    return render(request,"home.html",{"year" :year,
-                                       "month":month,
-                                       "month_number":month_number,
+    return render(request,"home.html",{#"year" :year,
+                                       #"month":month,
+                                    #    "month_number":month_number,
                                        "cal":cal,
                                        "time":time,
-                                       "current_year":current_year})
+                                       "current_year":current_year,
+                                       "event_list":event_list})
 
 def all_events(request):
     events_list = Event.objects.all().order_by("event_date","venue")
@@ -94,7 +105,7 @@ def all_venues(request):
 def show_venue(request,id):
     venue = Venue.objects.get(pk = id)
     venue_owner = User.objects.get(pk = venue.owner)
-    return render(request,"/venue/venue_detail.html",{"venue":venue,
+    return render(request,"venue/venue_detail.html",{"venue":venue,
                                                "venue_owner":venue_owner})
     
 def search_venues(request):
