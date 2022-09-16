@@ -13,7 +13,7 @@ def user_login(request):
         user    = authenticate(request,username = username,password = password)
         if user is not None:
             login(request,user)
-            return redirect("home")
+            return render(request,"core/home.html")
         else:
             messages.info(request,"Invalid username or password! Please, try again or create new profile!")
             return render (request,"registration/login.html")
@@ -22,7 +22,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return render (request,"home.html")
+    return render (request,"core/home.html")
 
 def user_register(request):
     if request.method == "POST":
