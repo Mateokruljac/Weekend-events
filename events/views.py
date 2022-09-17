@@ -121,7 +121,7 @@ def search_venues(request):
 def search_events(request):
     if request.method == "POST":
         searched = request.POST.get("searched")
-        events = Event.objects.filter(name__contains = searched)
+        events = Event.objects.filter(name__contains = searched,approved = True)
             
         if events:
             return render(request,"event/search_events.html",{"searched":searched,
@@ -370,3 +370,11 @@ def admin_approval(request):
     else:
         messages.info(request,"Sorry! You are not allowed to see this page!")
         return render (request,"event/admin_approval.html")
+
+
+#get events filtered by venue
+def events_by_venue (request,venue_id):
+    venue = Venue.objects.get(id = venue_id)     
+    event_list = Event.objects.filter(venue = venue_id).order_by("event_date")
+    return render (request,"event/event_by_venue.html",{"event_list":event_list,
+                                                        "venue":venue})

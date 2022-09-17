@@ -23,12 +23,12 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Events
           </a>
-          <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-            <a class="nav-link" href="{% url 'all_events' %}">Events</a>
+          <div class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item " href="{% url 'all_events' %}" style ="color:black">Events</a>
             {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'my_events' request.user %}">My Events</a>
+            <a class="dropdown-item" href="{% url 'my_events' request.user %}" style ="color:black">My Events</a>
             {% endif %}
-            <a class="nav-link" href="{% url 'search_events' %}">Search</a>
+            <a class="dropdown-item" href="{% url 'search_events' %}" style ="color:black">Search</a>
         </li>
       
   
@@ -44,12 +44,12 @@
         </li>   
         {% endif %}  
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Download 
           </a>
-          <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-            <a class="nav-link " href="{% url 'venue_text' %}" style = "color:white">Download Venues text</a>
-            <a class="nav-link" href="{% url 'venue_pdf' %}  " style = "color:white">Download Venues PDF</a>
+          <div class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'venue_text' %}" style = "color:black">Download Venues text</a>
+            <a class="dropdown-item" href="{% url 'venue_pdf' %}  " style = "color:black">Download Venues PDF</a>
             
         </li>
         {% if user.is_authenticated %}

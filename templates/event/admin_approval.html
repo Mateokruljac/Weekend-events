@@ -68,6 +68,30 @@
 </div>
 </form>
 <br><hr><br>
+<h1>Venues</h1>
+   
+   <table class="table table-hover table-light">
+     <thead>
+       <tr>
+         <th scope="col">Venue</th>
+         <th scope="col">Address</th>
+         <th scope="col">Events</th>
+
+     
+         
+        </tr>
+  </thead>
+  <tbody>
+      {% for venue in venue_list %}
+      <tr>
+        <td><a href = "{% url 'show_venue' venue.id %}" style = "color:black">{{venue.name}}</a></td>
+        <td>{{venue.address}}</td>
+        <td><a href = "{% url 'event_by_venue' venue.id %}" style = "color:black">Click here</a></td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% else %}
     {% for message in messages %}
             {{message}}
