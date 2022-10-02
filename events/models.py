@@ -56,6 +56,9 @@ class Event(models.Model):
         today = datetime.date.today()
         if self.event_date.date() < today:
              time = "Past"
+        elif self.event_date.date() == today:
+            time = "Today"
+            
         else:
             time = "Future"
             
