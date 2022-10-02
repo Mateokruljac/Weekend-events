@@ -26,6 +26,5 @@ urlpatterns = [
     path("my-events/<str:manager>",my_events,name = "my_events"),
     path("search-event",search_events,name  = "search_events"),
     path("admin-approval",admin_approval,name = "admin_approval"),
-    path("event-by-venue/<venue_id>",events_by_venue,name = "event_by_venue")
-    
+    path("event-by-venue/<venue_id>",events_by_venue,name = "event_by_venue")    
 ]

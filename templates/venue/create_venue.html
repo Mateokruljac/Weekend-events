@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %}
-
+<title> {% block title %}Create venue{% endblock %}</title>
 {% block content %}
 {% if user.is_authenticated %}
    <center><h1>Add venue</h1> 
