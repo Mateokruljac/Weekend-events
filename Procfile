@@ -1,1 +1,1 @@
-web: gunicorn animalshopapp.wsgi:application
+web: gunicorn weekend-events.wsgi:application
