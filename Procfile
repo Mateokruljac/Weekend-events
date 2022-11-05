@@ -1,1 +1,1 @@
-web: gunicorn weekend-events.wsgi:application
+web: gunicorn WebsitePractice.wsgi:application
