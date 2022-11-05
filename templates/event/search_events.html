@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+<title> {% block title %}Events{% endblock %}</title>
+{% block content %}
+<div class ="card-header">
+<form method = "POST" action = "{% url 'search_events' %}">
+    {% csrf_token %}
+    <input type = "search" aria-label = "search" class ="form-control me-2" placeholder ="Search for events" name = "searched">
+    <br>
+    <button type ="submit" class ="btn btn-secondary">Search events </button>
+    {% if searched %} 
+    <p>You were looking for:  <strong>{{searched}}</strong><p>
+   {% endif %}
+    </div>   <br><hr><br>    
+</form>    
+
+    {% for event in events %}
+    <div class = "card">
+        <div class="card-header bg-secondary">
+              {{ event.name }}                         
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Venue: {{event.venue.name}}</h5>
+              <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
+              <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+              <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
+              <p class="card-text"><b>Description:</b> {{event.description|safe|slice:":150"}}...<br><a href ="{% url 'event_detail' event.id %}">click for more</a></p>
+              <p class="card-text"><a href = "{% url 'event_pdf' event.id %}" style = "color:black">Download content</a></p>
+                       {% if user == event.manager%}
+                        <div class = "card-footer text-muted">
+                         <a href = "{% url 'update_event' event.id %}" style = "color:black">
+                           <button class = "btn btn-outline-secondary" type = "submit" style = "color:black">Update {{event.name}}</button></a>
+                         <a href = "{% url 'delete_event' event.id %}" style = "color:black">
+                           <button class = "btn btn-outline-danger" type = "submit" style = "color:red">Delete {{event.name}}</button></a>
+                       </div>
+                       {% endif %}
+        </div></div>
+        <br><br>
+    {% endfor %}
+
+{% if messages %}
+    {% for message in messages %}
+    {{ message }}
+    {%  endfor  %}
+{% endif %}
+
+{% endblock %}

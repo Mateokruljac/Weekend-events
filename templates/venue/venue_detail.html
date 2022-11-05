@@ -1,8 +1,7 @@
-{% extends 'base.html' %}
-
+{% extends 'core/base.html' %}
+<title> {% block title %}{{venue.name}}{% endblock %}</title>
 {% block content %}
 
-{% for venue in venues %}
 <center>
    <h1>{{venue.name}}</h1>
 </center>
@@ -22,10 +21,15 @@
       {% if venue.email_address %}
       <p class="card-text"><b>Email Address:</b> {{venue.email_address}}</p>
       {% endif %}  
+      {% if venue_owner %}
+      <p class="card-text"><b>Owner:</b> {{venue_owner.first_name}}   {{venue_owner.last_name}}</p>
+      {% endif %} 
+      {% if venue.image %}
+      <img src = "{{ venue.image.url }}" width ="700px" height = "500px"> 
+      {% endif %} 
+      
 </div>
 </div>
-{% endfor %}
-
 {% endblock %}
 
 

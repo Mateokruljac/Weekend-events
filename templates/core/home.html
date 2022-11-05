@@ -1,0 +1,115 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div align = "center" ><h1>Events  of the year {{current_year}}</h1>
+</div>
+<div class ="row">
+<div  class = "col-sm-10">    
+{% if event_list %}
+     {% if user.is_authenticated %}
+      {% for event in event_list %}
+       <div class = "card">
+       <div class="card-header bg-secondary">
+             {{ event.name }}                         
+           </div>
+           <div class="card-body">
+             <h5 class="card-title">Venue: {{event.venue.name}}</h5>
+             <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
+             <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+             <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
+             <p class="card-text"><b>Description:</b> {{event.description|safe|slice:":150"}}...<br><a href ="{% url 'event_detail' event.id %}">click for more</a></p>
+             <p class="card-text"><a href = "{% url 'event_pdf' event.id %}" style = "color:black">Download content</a></p>
+                      {% if user == event.manager%}
+                       <div class = "card-footer text-muted">
+                        <a href = "{% url 'update_event' event.id %}" style = "color:black">
+                          <button class = "btn btn-outline-secondary" type = "submit" style = "color:black">Update {{event.name}}</button></a>
+                        <a href = "{% url 'delete_event' event.id %}" style = "color:black">
+                          <button class = "btn btn-outline-danger" type = "submit" style = "color:red">Delete {{event.name}}</button></a>
+                      </div>
+                      {% endif %}
+           </div>
+          {% endfor %}
+          </div></div>
+          <div class ="col-sm-2">
+            Currently month
+            {{cal|safe}}<br>
+
+            WEATHER APP - comming soon! 
+        </div></div>
+        event_list SLIDER - comming soon!
+          <center>
+            <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+               {% if event_list.has_previous %} 
+                <li class="page-item">
+                  <a class="page-link" href="?page=1" tabindex="-1" style="color:black">First page</a>
+                </li>
+                <li class="page-item dark">
+                  <a class="page-link" href="?page={{event_list.previous_page_number}}" tabindex="-1" style="color:black">Previous</a>
+                </li>
+               {% else %} 
+                <li class="page-item">
+                  <a class="page-link"  tabindex="-1" style="color:black">First page</a>
+                </li>
+                <li class="page-item ">
+                  <a class="page-link"tabindex="-1" style="color:black">Previous</a>
+                </li>
+                {% endif %}
+                <li class="page-item active ">
+                  <a class="page-link bg-dark" href="#">{{ event_list.number}} of {{event_list.paginator.num_pages}}</a>
+                </li>
+                {% if event_list.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{event_list.next_page_number}}"style="color:black">Next</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="?page={{event_list.paginator.num_pages}}" style="color:black">End</a>
+                </li>
+                
+                {% else %}
+                <li class="page-item"><a class="page-link"style="color:black" >Next</a></li>
+                <li class="page-item">
+                  <a class="page-link"style="color:black" >End</a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+            </center>
+<div class ="row">
+<div  class = "col-sm-8">           
+   {% else %}
+           {% for event in event_list %}
+           <div class = "card">
+           <div class="card-header bg-secondary">
+                 {{ event.name }}                         
+               </div>
+               <div class="card-body">
+                 <h5 class="card-title">Venue: {{event.venue.name}}</h5>
+                 <p class = "card-text"><b>Venue Website:</b> <small>{{event.venue.web}}</small></p>
+                 <p class="card-text"><b>Date:</b> {{event.event_date}}</p>
+                 <p class="card-text"><b>Manager:</b> {{event.manager}}</p>
+                 <p class="card-text"><b>Description:</b> {{event.description|safe|slice:":150"}}...<br><a href ="{% url 'event_detail' event.id %}">click for more</a></p>
+                 <p class="card-text"><a href = "{% url 'event_pdf' event.id %}" style = "color:black">Download content</a></p>
+           
+                 {% endfor %}
+               </div><div  class ="col-sm-4">{{cal|safe}}</div></div>
+      {% endif %}      
+{% else %}
+<br><br>
+<div class ="row">
+  <div class = "col-sm-4">
+     Sorry, there is not event for this month!<br>
+     You want to add one? Click on the button below!<br>
+     <button class ="btn btn-outline-secondary" type = "button" aria-label = "button"><a href = "{% url 'add_event' %}" style = "color:black">+Add Event</a></button>
+  </div>
+  <div class ="col-sm-4">
+  </div>
+  <div class = "col-sm-4">
+    {{cal|safe}}
+  </div>
+{% endif %}
+</div>
+</div> 
+
+
+{% endblock %}
