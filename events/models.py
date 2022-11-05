@@ -1,7 +1,6 @@
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
-from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -36,7 +35,7 @@ class Event(models.Model):
     #if the manager deletes the profile, we don't want to delete the event, 
     # then we have to set it to the default value of zero
     manager = models.ForeignKey(User,on_delete = models.SET_NULL,blank = True,null = True)
-    description = RichTextField(blank = True)
+    description = models.TextField(blank = True)
     attendees = models.ManyToManyField(MyClubUsers,blank = True)
     # admin should approve, if he wants! 
     approved =  models.BooleanField(default=False) # if approved return TRUE, else FALSE 
