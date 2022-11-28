@@ -47,7 +47,7 @@ def user_register(request):
                )
                user.save()
                messages.info(request,"Account sucessfully created!")
-               return render (request,"registration/login.html")
+               return redirect("login_user")
        else:
            messages.info(request,"Passwords not  matching!")
            return render(request,"registration/register.html")
